@@ -1,3 +1,4 @@
+#include <exception>
 #include <iostream>
 #include <stack>
 using namespace std;
@@ -90,8 +91,19 @@ ListNode *swapPairs1(ListNode *head) {
   int i = 1;
   ListNode *prev = head;
   ListNode *curr = head->next;
+  head = curr;
   while (true) {
+    ListNode *next = curr->next;
+    curr->next = prev;
+    if (next == nullptr || next->next == nullptr) {
+      prev->next = next;
+      break;
+    }
+    prev->next = next->next;
+    prev = next;
+    curr = prev->next;
   }
+  cout << "Head val in func = " << head->val;
 
   return head;
 }
