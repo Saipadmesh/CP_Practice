@@ -10,19 +10,20 @@ vector<int> divide(vector<int> &arr, int begin, int end) {
 
   int middle = (end == begin) ? end : (end + begin) / 2;
 
-  if (arr[middle] == middle) {
-    vector<int> a = divide(arr, begin, middle - 1);
-
-    return (a[0] == 0) ? vector<int>{1, middle} : a;
-  }
   vector<int> a = divide(arr, begin, middle - 1);
-  vector<int> b = divide(arr, middle + 1, end);
+
   if (a[0] == 1) {
     return a;
-  } else if (b[0] == 1) {
-    return b;
+  } else if (arr[middle] == middle) {
+    return (a[0] == 0) ? vector<int>{1, middle} : a;
   } else {
-    return vector<int>{0, -1};
+    vector<int> b = divide(arr, middle + 1, end);
+    if (b[0] == 1) {
+
+      return b;
+    } else {
+      return vector<int>{0, -1};
+    }
   }
 }
 

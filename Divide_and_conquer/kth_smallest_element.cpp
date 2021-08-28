@@ -3,14 +3,6 @@
 #include <vector>
 using namespace std;
 
-/*void printArray(vector<int> arr) {
-  int n = arr.size();
-  for (int i = 0; i < n; i++) {
-    cout << arr[i] << " ";
-  }
-  cout << endl;
-}*/
-
 // get a pivot value where the values before pivot are sorted
 int get_pivot(vector<int> &nums, int begin, int end) {
   int p_index = begin, pivot = nums[begin];
@@ -36,10 +28,7 @@ int quick_sort(vector<int> &nums, int begin, int end, int k) {
   int pivot = get_pivot(nums, begin, end);
   // count of elements till pivot
   int count = pivot - begin + 1;
-  /*cout << "Pivot Index: " << pivot << "\nPivot value: " << nums[pivot]
-       << "\nCount: " << count << "\nK value: " << k << endl;
-  printArray(nums);
-  cout << endl;*/
+
   if (count == k) {
     return nums[pivot];
   } else if (k < count) {
@@ -73,12 +62,3 @@ int main() {
     cout << ans << "," << index_map.find(ans)->second << endl;
   }
 }
-
-/*int main() {
-  vector<int> nums = {12, -12, 2, 5, 7, 9, 3};
-  int k;
-  cin >> k;
-  int n = nums.size();
-  int ans = quick_sort(nums, 0, n - 1, k);
-  cout << "Answer: " << ans << endl;
-}*/
