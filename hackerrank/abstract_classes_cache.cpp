@@ -17,6 +17,15 @@ struct Node {
   Node(int k, int val) : prev(NULL), next(NULL), key(k), value(val){};
 };
 
+void printLinkedList(Node *head) {
+  Node *temp = head;
+  while (temp != nullptr) {
+    cout << temp->value << ",";
+    temp = temp->next;
+  }
+  cout << endl;
+}
+
 class Cache {
 
 protected:
@@ -66,6 +75,23 @@ public:
     if (mp.find(index) == mp.end()) {
       return -1;
     } else {
+      if (mp[index] != head) {
+        if (mp[index] != tail) {
+          mp[index]->next->prev = mp[index]->prev;
+          mp[index]->prev->next = mp[index]->next;
+          mp[index]->prev = nullptr;
+
+        } else {
+          mp[index]->prev->next = nullptr;
+          tail = mp[index]->prev;
+          mp[index]->prev = nullptr;
+        }
+        mp[index]->next = head;
+        head->prev = mp[index];
+        head = mp[index];
+      }
+
+      // printLinkedList(head);
       return mp[index]->value;
     }
   }
