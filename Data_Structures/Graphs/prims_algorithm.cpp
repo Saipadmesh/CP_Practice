@@ -9,13 +9,24 @@
 
 using namespace std;
 
-void print_array(bool arr[], int n) {
+// for sorting the priority queue from minimum to maximum
+
+void print_barray(bool arr[], int n) {
+  cout << "Boolean Array: ";
   for (int i = 0; i < n; i++) {
     cout << arr[i] << ",";
   }
   cout << endl;
 }
-// for sorting the priority queue from minimum to maximum
+
+void print_array(int arr[], int n) {
+  cout << "Key array: ";
+  for (int i = 0; i < n; i++) {
+    cout << arr[i] << ",";
+  }
+  cout << endl;
+}
+
 struct compare_pq {
   bool operator()(vector<int> &a, vector<int> &b) {
     int first = a[2];
@@ -24,7 +35,6 @@ struct compare_pq {
   }
 };
 
-// For linked list
 class Node {
 public:
   int vertex, weight;
@@ -123,12 +133,18 @@ protected:
            vector<vector<int>> &mst, bool visited[], int keys[]) {
 
     int vertices = graph.size();
+    // print_array(keys, vertices);
+    // print_barray(visited, vertices);
+    // print_pq(pq);
     if (pq.empty()) {
+      // cout << "queue empty" << endl;
       return;
     }
     int curr_index = pq.top()[1], prev_index = pq.top()[0],
         weight = pq.top()[2];
     if (visited[curr_index] == true) {
+      pq.pop();
+      make_mst(pq, mst, visited, keys);
       return;
     }
     if (prev_index != -1) {
@@ -147,7 +163,6 @@ protected:
       }
       curr_node = curr_node->next;
     }
-
     make_mst(pq, mst, visited, keys);
   }
 
