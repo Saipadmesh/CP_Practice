@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <climits>
+#include <fstream>
 #include <iostream>
 #include <list>
 #include <map>
@@ -176,22 +177,24 @@ protected:
 };
 
 int main() {
-  cout << "Enter number of vertices: ";
+  // cout << "Enter number of vertices: ";
+  ifstream file_input;
+  file_input.open("graph_input.txt");
   int n;
-  cin >> n;
-  cout << "Enter number of edges: ";
+  file_input >> n;
+  // cout << "Enter number of edges: ";
   int e;
-  cin >> e;
+  file_input >> e;
 
   Graph g;
   int i = 1;
   while (i <= e) {
 
-    cout << "Enter Edge Number " << i << ": ";
+    // cout << "Enter Edge Number " << i << ": ";
     int src, dest, weight;
-    cin >> src;
-    cin >> dest;
-    cin >> weight;
+    file_input >> src;
+    file_input >> dest;
+    file_input >> weight;
     g.addEdge(src, dest, weight);
     i++;
   }
