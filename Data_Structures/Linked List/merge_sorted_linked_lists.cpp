@@ -72,10 +72,6 @@ ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
     }
     curr = curr->next;
   }
-  if (l1) {
-  }
-  if (l2) {
-  }
 
   while (l1) {
     curr->next = l1;
