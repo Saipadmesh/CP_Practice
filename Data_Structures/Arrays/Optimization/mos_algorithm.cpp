@@ -1,35 +1,39 @@
-#include <bits/stdc++.h>
-#include <cstdlib>
-#include <ctype.h>
+#include <algorithm>
+#include <cmath>
 #include <iostream>
-#include <string>
 using namespace std;
 
 // A query contains sum of nmbers in an array between two indices.
 // MO's algorithm processes multiple queries at once in O((m+n)*sqrt(n)) instead
 // of O(m*n)
 
-// We split it into blocks of size sqrt(n) and calculate sum of each block to
-// increase efficiency.
+// The idea is to preprocess all queries and use the sum of previous queries in
+// the next query.
+
 int block;
 struct Query {
   int L, R;
 };
 
 bool compareQuery(Query q1, Query q2) {
+  // Both queries belong to different blocks.
+  // eg: 0 to sqrt(n)-1 and sqrt(n) to 2*sqrt(n)-1
   if (q1.L / block != q2.L / block) {
     return (q1.L / block < q2.L / block);
   }
-  // if L is same
+  // Both queries exist within a block
   return q1.R < q2.R;
 }
 
 void print_mos_algo(int arr[], int n, Query q[], int m) {
+  // Split array into blocks of size sqrt(n)
   block = (int)sqrt(n);
-  // sort queries based on the left index or the min index
+  // sort queries based on the left index/blockSize or the min right index
   sort(q, q + m, compareQuery);
+  // variables for finding answer to the current query. Note that current Right
+  // also starts from 0.
   int currL = 0, currR = 0, sum = 0;
-
+  // Loop through queries
   for (int i = 0; i < m; i++) {
     int L = q[i].L;
     int R = q[i].R;
@@ -54,7 +58,7 @@ void print_mos_algo(int arr[], int n, Query q[], int m) {
       sum -= arr[currR];
       currR--;
     }
-    cout << "Sum of [" << L << ", " << R << "] is " << sum << endl;
+    cout << "Sum of indices [" << L << ", " << R << "] is " << sum << endl;
   }
 }
 

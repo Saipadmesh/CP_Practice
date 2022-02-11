@@ -1,3 +1,7 @@
+// A grid of numbers is given. If we need to step on that cell, the number in
+// that cell is the amount of HP deducted or added, based on the sign. Find the
+// minimum number of HP required to reach the top left corner of the array
+// from the bottom right corner of the array.
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -20,13 +24,7 @@ int minHP(int **arr, int m, int n) {
       minPoints[i][j] = max(1, pointsForExit - arr[i][j]);
     }
   }
-  /*cout << "\nPrinting Table:" << endl;
-  for (int i = 0; i < m; i++) {
-    for (int j = 0; j < n; j++) {
-      cout << minPoints[i][j] << " ";
-    }
-    cout << endl;
-  }*/
+
   return minPoints[0][0];
 }
 
@@ -44,6 +42,4 @@ int main() {
     }
   }
   cout << minHP(arr, m, n);
-
-  // cout << "Minimum health points required is " << minHealth << endl;
 }

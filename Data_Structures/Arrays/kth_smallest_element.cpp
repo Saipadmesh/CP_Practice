@@ -1,54 +1,62 @@
 // Find the kth minimum element in an array
 
 // Multiple ways to answer this question, will try to attempt all of them
-// Method Using quick Sort is implemented in Divide and Conquer section (..or is
-// it?)
 #include <algorithm>
 #include <climits>
+#include <functional>
 #include <iostream>
 #include <iterator>
+#include <queue>
 #include <set>
+#include <vector>
 using namespace std;
 
 // Using set from C++ stl which is implemented using a BST
 int kthSmallest_set(int arr[], int l, int r, int k) {
+  // sorts integers during input
   set<int> s(arr, arr + r + 1);
   set<int>::iterator itr = s.begin();
+  // move to the position (k-1)
   advance(itr, k - 1);
   return *itr;
 }
-
+// helper function to make a min heap
 struct compares {
-  bool operator()(const long &a, const long &b) const { return a > b; }
+  bool operator()(const long &a, const long &b) const { return a < b; }
 };
-// Using STL heap
-int kthSmallest_heap(int arr[], int l, int r, int k) {
-  make_heap(arr, arr + r + 1, compares());
-  for (int i = 0; i < k - 1; i++) {
-    pop_heap(arr, arr + r + 1);
+// Using STL Priority Queue
+int kthSmallest_heap(int arr[], int n, int k) {
+  // STL priority queue is usually implemented using a max_heap. Here, the use
+  // of greater<int> makes sure that it is implemented as a min_heap.
+  priority_queue<int, vector<int>, greater<int>> heap;
+  for (int i = 0; i < n; i++) {
+    // min heap makes sure that the smallest value is always on top.
+    heap.push(arr[i]);
   }
-  return arr[0];
+  for (int i = 0; i < k - 1; i++) {
+    heap.pop();
+  }
+  return heap.top();
 }
-void swap(int *a, int *b) {
-  int temp = *a;
-  *a = *b;
-  *b = temp;
-}
+
+// get Pivot for quick sort algo.
 int get_pivot(int nums[], int begin, int end) {
-  int p_index = begin, pivot = nums[end];
-  for (int i = begin; i <= end - 1; i++) {
-    // if a number in the array is less than pivot, push pivot to the right
+  // the first element in the subarray is considered as the pivot initially.
+  int p_index = begin, pivot = nums[begin];
+  for (int i = begin + 1; i <= end; i++) {
+    // if a number in the array is less than pivot, push pivot to the right by
+    // 1, and push the number to the left of the pivot
     if (nums[i] < pivot) {
-      cout << nums[i] << "," << nums[p_index] << "," << nums[p_index + 1]
-           << endl;
-      swap(&nums[i], &nums[p_index]);
+      nums[p_index] = nums[i];
+      nums[i] = nums[p_index + 1];
+      nums[p_index + 1] = pivot;
       p_index++;
     }
   }
-  swap(&nums[p_index], &nums[end]);
   return p_index;
 }
-
+// Implemented using quick sort algorithm, but the function sorts only till k
+// elements are returns the kth smallest element
 int kthSmallest_quick(int nums[], int begin, int end, int k) {
   if (k <= 0 || k > end - begin + 1) {
     return INT_MAX;

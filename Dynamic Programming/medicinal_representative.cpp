@@ -13,24 +13,19 @@ int find_max_index(int arr[], int m) {
       index = i;
     }
   }
-  // cout << "Starting index (temp) is " << index << " ";
-  // cout << "Max (temp) is " << max << endl;
-  // vector<int> ans = {index, max};
+
   return max;
 }
 
 int find_path_count(int **next, int start, int end) {
-  // cout << "Entered find path count function" << endl;
   if (next[start][end] == -1) {
     return 0;
   }
   int count = 1;
   while (start != end) {
-    // cout << start << endl;
     start = next[start][end];
     count++;
   }
-  // cout << "Exited find path count function" << endl;
   return count;
 }
 
@@ -80,39 +75,12 @@ void find_path(int **arr, int m, int n, vector<int> potential_starting_points) {
       next[i][j] = (arr[i][j] != 0 && arr[i][j] != -1) ? j : -1;
     }
   }
-  /*cout << "Next before function: " << endl;
-  for (int i = 0; i < m; i++) {
-    for (int j = 0; j < m; j++) {
-      int ans = next[i][j];
-      cout << ans << " ";
-    }
-    cout << endl;
-  }
-  cout << "\n\n";*/
+
   int **dp_table = find_start(arr, m, next, potential_starting_points);
 
-  // print next
-  /*cout << "\n\n";
-  cout << "Next after function: " << endl;
-  for (int i = 0; i < m; i++) {
-    for (int j = 0; j < m; j++) {
-      int ans = next[i][j];
-      cout << ans << " ";
-    }
-    cout << endl;
-  }
-  cout << "\n\n";*/
-
   int total_max = INT_MIN, start = -1;
-  /*cout << "Starting points: ";
   for (auto ip = potential_starting_points.begin();
        ip != potential_starting_points.end(); ip++) {
-    cout << *ip << ",";
-  }
-  cout << endl;*/
-  for (auto ip = potential_starting_points.begin();
-       ip != potential_starting_points.end(); ip++) {
-    // cout << *ip << endl;
     int temp_max = find_max_index(dp_table[*ip], m);
     if (total_max < temp_max) {
       total_max = temp_max;

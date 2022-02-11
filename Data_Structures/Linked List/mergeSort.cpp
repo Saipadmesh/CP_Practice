@@ -40,29 +40,34 @@ node *arrayToList(int arr[], int n) {
     insert(&root, arr[i]);
   return root;
 }
+// Function to find the middle of the linked list
 node *findMiddle(node *head) {
-  // cout << "Inside findMiddle fn" << endl;
+  // Use two pointers, one which skips alternate elements, and one that doesn't.
+  // Run a loop till the fast one reaches the end of the list. The value of the
+  // slow pointer will be the middle.
   node *fast = head;
   node *slow = head;
   if (head != NULL) {
     while (fast->next != NULL && fast->next->next != NULL) {
       fast = fast->next->next;
-      // cout << "Slow val: " << slow->data << endl;
       slow = slow->next;
     }
     return slow;
   } else {
     return head;
   }
-  // cout << "Returning from findMiddle fn" << endl;
 }
 
 node *merge(node *left, node *right) {
-  // cout << "Inside merge" << endl;
+  // This pointer is for moving through the merged linked list
   node *merged = NULL;
+  // this variable is for pointing to the head of the new sorted linked list
   node *mergedHead = NULL;
+  // Pointers for both of the linked lists
   node *currLeft = left;
   node *currRight = right;
+  // Select the first node of the merged linked list based on which of the two
+  // is smaller.
   if (left->data < right->data) {
     merged = mergedHead = left;
     currLeft = currLeft->next;
@@ -72,7 +77,8 @@ node *merge(node *left, node *right) {
   }
 
   while (currLeft != NULL && currRight != NULL) {
-    // cout << "Inside while loop" << endl;
+    // compare the values of the two pointers and add the smaller one to the
+    // final list.
     if (currLeft->data <= currRight->data) {
       merged->next = currLeft;
       currLeft = currLeft->next;
@@ -82,21 +88,24 @@ node *merge(node *left, node *right) {
     }
     merged = merged->next;
   }
+  // If one of the lists is not empty yet, simply add it to the end of the
+  // merged list.
   merged->next = (currLeft != NULL) ? currLeft : currRight;
-
+  // Return the head of the merged list
   return mergedHead;
 }
 
 node *mergeSort(node *head) {
   if (head == nullptr || head->next == nullptr) {
-    // cout << "Returned from mergeSort function" << endl;
+    // We need to stop at the tail node
     return head;
   }
-  // cout << "Did not return from mergeSort function" << endl;
+  // Find the middle of the current linked list
   node *mid = findMiddle(head);
-  // cout << "Mid val: " << mid->data << endl;
   node *rightHead = mid->next;
+  // Detach the two linked lists
   mid->next = NULL;
+  // recursive call for both those linked lists
   node *left = mergeSort(head);
   node *right = mergeSort(rightHead);
   return merge(left, right);

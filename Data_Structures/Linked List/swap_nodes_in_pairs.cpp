@@ -103,8 +103,26 @@ ListNode *swapPairs1(ListNode *head) {
     prev = next;
     curr = prev->next;
   }
-  cout << "Head val in func = " << head->val;
+  cout << "Head val in func = " << head->val << endl;
 
+  return head;
+}
+
+// Easiest implementation using recursion
+ListNode *swapPairs2(ListNode *head) {
+  ListNode *prev = head;
+  ListNode *curr = prev->next;
+  ListNode *next = curr->next;
+  // swap first and second elements
+  prev->next = next;
+  curr->next = prev;
+  // change head
+  head = curr;
+  // if the next node is not null and if the length is not odd, do a recursive
+  // call
+  if (next != nullptr && next->next != nullptr) {
+    prev->next = swapPairs2(next);
+  }
   return head;
 }
 
@@ -112,8 +130,8 @@ int main() {
   int arr[] = {1, 2, 3, 4, 5};
   int n = sizeof(arr) / sizeof(arr[0]);
   ListNode *head = arrayToList(arr, n);
-  swapPairs1(head);
+  ListNode *ans = swapPairs2(head);
   cout << "Final list:\n";
-  display(head);
+  display(ans);
   cout << endl;
 }
