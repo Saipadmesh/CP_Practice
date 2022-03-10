@@ -44,7 +44,8 @@ ListNode *arrayToList(int arr[], int n) {
     insert(&root, arr[i]);
   return root;
 }
-
+// Use 2 pointers to reach the proper first and second nodes and swap their
+// values.
 ListNode *swapNodes(ListNode *head, int k) {
   ListNode *start, *end;
   start = head;
