@@ -15,17 +15,20 @@ using namespace std;
 // price on day(min) higher than day(max), no need to buy, wait till day(max).
 // Otherwise, check your previous total profit, and if current profit is higher,
 // make it your total profit.
-int maxProfit(vector<int> &prices) {
+int maxProfit(vector<int> &prices)
+{
   int minIndex = 0;
   int maxIndex = 1;
   int maxResult = 0;
   int i = 0;
-  while (maxIndex < prices.size()) {
-    if (prices[minIndex] < prices[maxIndex]) {
-      maxResult = (maxResult > prices[maxIndex] - prices[minIndex])
-                      ? maxResult
-                      : prices[maxIndex] - prices[minIndex];
-    } else {
+  while (maxIndex < prices.size())
+  {
+    if (prices[minIndex] < prices[maxIndex])
+    {
+      maxResult = max(maxResult, prices[maxIndex] - prices[minIndex]);
+    }
+    else
+    {
       minIndex = maxIndex;
     }
     maxIndex++;
@@ -33,7 +36,8 @@ int maxProfit(vector<int> &prices) {
   return maxResult;
 }
 
-int main() {
+int main()
+{
   vector<int> arr = {2, 4, 1, 2};
   int ans = maxProfit(arr);
   cout << ans << endl;
