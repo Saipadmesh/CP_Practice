@@ -59,7 +59,7 @@ node *reverse(node *head)
     {
         next = curr->next;
         curr->next = prev;
-        int outputval = (curr->next) ? curr->next->val : -1;
+        // int outputval = (curr->next) ? curr->next->val : -1;
         prev = curr;
         curr = next;
     }
